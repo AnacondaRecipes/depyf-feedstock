@@ -19,6 +19,8 @@ requirements:
     - python
     - setuptools
     - pip
+    - git
+    - wheel
   run:
     - python
     - astor
