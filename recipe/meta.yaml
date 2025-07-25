@@ -1,13 +1,13 @@
 {% set name = "depyf" %}
-{% set version = "0.19.0" %}
+{% set version = "0.18.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/depyf-{{ version }}.tar.gz
-  sha256: afed0916b32d141cc90fa6220df01885eda442ca43b297d5050eeb90b4a5cb44
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/depyf-{{ version }}.tar.gz
+  sha256: b99f0c383be949ae45d5d606fe444c71f375b55a57b8d6b20e7856670d52130d
 
 build:
   noarch: python
@@ -16,13 +16,14 @@ build:
 
 requirements:
   host:
-    - python {{ python_min }}
-    - setuptools
+    - python >=3.7
     - pip
+    - git
   run:
-    - python >={{ python_min }}
+    - python >=3.7
     - astor
     - dill
+    
 
 test:
   imports:
@@ -30,7 +31,6 @@ test:
   commands:
     - pip check
   requires:
-    - python {{ python_min }}
     - pip
 
 about:
@@ -38,7 +38,14 @@ about:
   summary: Decompile python functions, from bytecode to source code!
   license: MIT
   license_file: LICENSE
+  dev_url: https://github.com/thuml/depyf
+  doc_url: https://github.com/thuml/depyf/tree/master/docs
 
 extra:
+  anaconda-services:
+    ref: https://anaconda.zendesk.com/agent/tickets/49522
+    reason: Dependency for vllm
+  recipe-maintainers:
+    - ianaobi
   recipe-maintainers:
     - maresb
