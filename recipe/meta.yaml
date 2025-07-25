@@ -18,10 +18,12 @@ requirements:
   host:
     - python >=3.7
     - pip
+    - git
   run:
     - python >=3.7
     - astor
     - dill
+    
 
 test:
   imports:
