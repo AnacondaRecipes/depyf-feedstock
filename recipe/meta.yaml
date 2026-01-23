@@ -16,6 +16,12 @@ build:
 
 requirements:
   host:
+    # The setup.py for this project assumes git is installed and blindly calls it. Our Windows
+    # dev instances do not have git on the system, so add it here in hosts so setup.py can find
+    # it. The git invocation from setup.py will fail, since this is build from a tarball, but
+    # that case is handled by setup.py
+    # https://github.com/thuml/depyf/blob/v0.18.0/setup.py#L10
+    - git # [win]
     - python
     - setuptools
     - pip
