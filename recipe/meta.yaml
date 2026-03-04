@@ -1,5 +1,5 @@
 {% set name = "depyf" %}
-{% set version = "0.19.0" %}
+{% set version = "0.18.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,20 +7,28 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/depyf-{{ version }}.tar.gz
-  sha256: afed0916b32d141cc90fa6220df01885eda442ca43b297d5050eeb90b4a5cb44
+  sha256: b99f0c383be949ae45d5d606fe444c71f375b55a57b8d6b20e7856670d52130d
 
 build:
-  noarch: python
+  skip: true # [py<310]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 0
 
 requirements:
+  build:
+    # The setup.py for this project assumes git is installed and blindly calls it. Our build
+    # dev instances might not have git on the system, so add it here in hosts so setup.py can find
+    # it. The git invocation from setup.py will fail, since this is build from a tarball, but
+    # that case is handled by setup.py
+    # https://github.com/thuml/depyf/blob/v0.18.0/setup.py#L10
+    - git
   host:
-    - python {{ python_min }}
+    - python
     - setuptools
     - pip
+    - wheel
   run:
-    - python >={{ python_min }}
+    - python
     - astor
     - dill
 
@@ -30,14 +38,21 @@ test:
   commands:
     - pip check
   requires:
-    - python {{ python_min }}
     - pip
 
 about:
   home: https://github.com/thuml/depyf
   summary: Decompile python functions, from bytecode to source code!
+  description: |
+    depyf is a software tool to leverage advanced Python features to open up
+    internal details of PyTorch's compiler torch.compile, so that users can
+    understand it, adapt to it, and tune their code to get maximum 
+    performance benefit out of it.
   license: MIT
+  license_family: MIT
   license_file: LICENSE
+  dev_url: https://github.com/thuml/depyf
+  doc_url: https://depyf.readthedocs.io/
 
 extra:
   recipe-maintainers:
