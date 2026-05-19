@@ -1,5 +1,5 @@
 {% set name = "depyf" %}
-{% set version = "0.18.0" %}
+{% set version = "0.20.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/depyf-{{ version }}.tar.gz
-  sha256: b99f0c383be949ae45d5d606fe444c71f375b55a57b8d6b20e7856670d52130d
+  sha256: fb7683bd72c44f67b56029df2c47721e9a02ffa4d7b19095f1c54c4ebf797a98
 
 build:
   skip: true # [py<310]
@@ -20,7 +20,7 @@ requirements:
     # dev instances might not have git on the system, so add it here in hosts so setup.py can find
     # it. The git invocation from setup.py will fail, since this is build from a tarball, but
     # that case is handled by setup.py
-    # https://github.com/thuml/depyf/blob/v0.18.0/setup.py#L10
+    # https://github.com/thuml/depyf/blob/v{{ version }}/setup.py#L10
     - git
   host:
     - python
